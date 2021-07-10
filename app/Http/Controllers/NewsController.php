@@ -8,19 +8,19 @@ class NewsController extends Controller
 {
     public function welcome()
     {
-        return view('News.welcome');
+        return view('news.welcome');
     }
 
     public function categories()
     {
-        return view('News.categories', [
+        return view('news.categories', [
             'categoriesList'=>$this->getCategories()
         ]);
     }
 
     public function categoryNews($id)
     {
-        return view('News.categoryNews', [
+        return view('news.categoryNews', [
             'id' => $id,
             'newsList'=>$this->getNews()
         ]);
@@ -28,7 +28,7 @@ class NewsController extends Controller
 
     public function newsItem($catId, $id)
     {
-        return view('News.newsItem', [
+        return view('news.newsItem', [
             'catId' => $catId,
             'id' => $id,
             'newsItemText'=>$this->getText()

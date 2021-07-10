@@ -13,7 +13,7 @@
                 <!-- Post preview-->
                     <div class="post-preview">
                         <a href="{{ route('news', ['catId'=>$id, 'id'=>++$key]) }}">
-                            <h2 class="post-title">{{ $news }}</h2>
+                            <h2 class="post-title">{{ $news['name'] }}</h2>
                         </a>
                     </div>
                     <!-- Divider-->
