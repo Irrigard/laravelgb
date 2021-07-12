@@ -55,11 +55,11 @@
                                     <tbody>
                                     @forelse($categoriesList as $category)
                                     <tr>
-                                        <td>{{ $loop->index }}</td>
-                                        <td>{{ $category['name'] }}</td>
-                                        <td>{{ $category['description'] }}</td>
-                                        <td>{{ $category['date'] }}</td>
-                                        <td><a href="{{ route('admin.categories.edit', ['category'=>$loop->index]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;<a href="" style="font-size: 16px; color:red;">уд.</a></td>
+                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $category->title }}</td>
+                                        <td>{{ $category->description }}</td>
+                                        <td>{{ $category->created_at }}</td>
+                                        <td><a href="{{ route('admin.categories.edit', ['category'=>$category->id]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;<a href="" style="font-size: 16px; color:red;">уд.</a></td>
                                     </tr>
                                     @empty
                                         <tr>
