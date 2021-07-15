@@ -52,11 +52,11 @@
                                     <tbody>
                                     @forelse($newsList as $news)
                                         <tr>
-                                            <td>{{ $loop->index }}</td>
-                                            <td>{{ $news['name'] }}</td>
-                                            <td>{{ $news['description'] }}</td>
-                                            <td>{{ $news['date'] }}</td>
-                                            <td><a href="{{ route('admin.news.edit', ['news'=>$loop->index]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;<a href="" style="font-size: 16px; color:red;">уд.</a></td>
+                                            <td>{{ $news->id }}</td>
+                                            <td>{{ $news->title }}</td>
+                                            <td>{{ $news->description }}</td>
+                                            <td>{{ $news->created_at }}</td>
+                                            <td><a href="{{ route('admin.news.edit', ['news'=>$news->id]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;<a href="" style="font-size: 16px; color:red;">уд.</a></td>
                                         </tr>
                                     @empty
                                         <tr>

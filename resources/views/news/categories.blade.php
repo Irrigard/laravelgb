@@ -9,11 +9,11 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                @foreach ($categoriesList as $key => $category)
+                @foreach ($categoriesList as $category)
                 <!-- Post preview-->
                 <div class="post-preview">
-                    <a href="{{ route('category', ['id'=>++$key]) }}">
-                        <h2 class="post-title">{{$category['name']}}</h2>
+                    <a href="{{ route('category', ['id'=>$category->id]) }}">
+                        <h2 class="post-title">{{$category->title}}</h2>
                     </a>
                 </div>
                 <!-- Divider-->
