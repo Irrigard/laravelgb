@@ -24,9 +24,9 @@ class NewsController extends Controller
 
     public function categoryNews($id)
     {
-        $news = \DB::table('relationships')
-            ->join('news', 'relationships.news_id', '=', 'news.id')
-            ->join('categories', 'relationships.category_id', '=', 'categories.id')
+        $news = \DB::table('rel_news_categories')
+            ->join('news', 'rel_news_categories.news_id', '=', 'news.id')
+            ->join('categories', 'rel_news_categories.category_id', '=', 'categories.id')
             ->select(['news.id as newsId', 'news.title as newsTitle'])
             ->where([
                 ['categories.id', '=', $id]

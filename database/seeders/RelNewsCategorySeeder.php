@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class RelationshipSeeder extends Seeder
+class RelNewsCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,18 +14,17 @@ class RelationshipSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('relationships')->insert($this->getData());
+        \DB::table('rel_news_categories')->insert($this->getData());
     }
 
     public function getData(): array
     {
         $data = [];
 
-        for ($i = 0; $i < 5; $i++){
+        for ($i = 1; $i <= 10; $i++){
             $data[] = [
-                'category_id' => mt_rand(1, 5),
-                'news_id' => mt_rand(1, 10),
-                'source_id' => mt_rand(1, 5)
+                'news_id' => $i,
+                'category_id' => mt_rand(1, 6)
             ];
         }
 
