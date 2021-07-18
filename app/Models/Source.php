@@ -3,22 +3,21 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Source extends Model
 {
-    protected $table = 'categories';
+    protected $table = 'sources';
     protected $fillable = [
-        'title',
-        'description'
+        'title'
     ];
 
-    public function getCategories()
+    public function getSources()
     {
         return \DB::table($this->table)
-            ->select(['id', 'title', 'description', 'created_at'])
+            ->select(['id', 'title', 'created_at'])
             ->get();
     }
 
-    public function getCategoryById(int $id)
+    public function getSourceById(int $id)
     {
         return \DB::table($this->table)
             ->find($id);

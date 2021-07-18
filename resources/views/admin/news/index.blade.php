@@ -38,6 +38,7 @@
                                 </div>
                             </div>
                             <!-- /.card-header -->
+                            @include('inc.message')
                             <div class="card-body table-responsive p-0" style="height: 300px;">
                                 <table class="table table-head-fixed text-wrap">
                                     <thead>

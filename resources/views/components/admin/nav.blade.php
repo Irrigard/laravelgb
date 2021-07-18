@@ -8,10 +8,13 @@
             <a href="{{ route('admin.main') }}" class="nav-link">Админка</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ route('admin.news.index') }}" class="nav-link">Новости</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
             <a href="{{ route('admin.categories.index') }}" class="nav-link">Категории</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('admin.news.index') }}" class="nav-link">Новости</a>
+            <a href="{{ route('admin.sources.index') }}" class="nav-link">Источники</a>
         </li>
     </ul>
 

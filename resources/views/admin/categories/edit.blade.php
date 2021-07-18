@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Создать категорию:</h1>
+                        <h1>Редактировать категорию:</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -24,15 +24,17 @@
                     <div class="alert alert-danger">{{ $error }}</div>
                 @endforeach
             @endif
-            <form method="post" action="{{ route('admin.categories.store') }}" class="col-5">
+
+            <form method="post" action="{{ route('admin.categories.update', ['category'=>$category->id]) }}" class="col-5">
                 @csrf
+                @method('put')
                 <div class="form-group">
                     <label for="title">Название</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{!! old('title') !!}">
+                    <input type="text" class="form-control" id="title" name="title" value="{!! $category->title !!}">
                 </div>
                 <div class="form-group">
                     <label for="description">Описание</label>
-                    <textarea class="form-control" id="description" name="description">{!! old('description') !!}</textarea>
+                    <textarea class="form-control" id="description" name="description">{!! $category->description !!}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </form>
@@ -40,3 +42,4 @@
         <!-- /.content -->
     </div>
 @endsection
+

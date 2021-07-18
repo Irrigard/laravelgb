@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('title')
-    Категории
+    Источники
 @endsection
 @section('header')
-    Список категорий:
+    Список источников:
 @endsection
 @section('content')
     <div class="content-wrapper">
@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Категории</h1>
+                        <h1>Источники</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -26,8 +26,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Таблица категорий</h3>
-                                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary" style="float: right;">Добавить категорию</a>
+                                <h3 class="card-title">Таблица источников</h3>
+                                <a href="{{ route('admin.sources.create') }}" class="btn btn-primary" style="float: right;">Добавить источник</a>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -48,20 +48,18 @@
                                     <tr>
                                         <th>#ID</th>
                                         <th>Название</th>
-                                        <th>Описание</th>
                                         <th>Дата добавления</th>
                                         <th>Управление</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @forelse($categoriesList as $category)
-                                    <tr>
-                                        <td>{{ $category->id }}</td>
-                                        <td>{{ $category->title }}</td>
-                                        <td>{{ $category->description }}</td>
-                                        <td>{{ $category->created_at }}</td>
-                                        <td><a href="{{ route('admin.categories.edit', ['category'=>$category->id]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;<a href="" style="font-size: 16px; color:red;">уд.</a></td>
-                                    </tr>
+                                    @forelse($sourcesList as $source)
+                                        <tr>
+                                            <td>{{ $source->id }}</td>
+                                            <td>{{ $source->title }}</td>
+                                            <td>{{ $source->created_at }}</td>
+                                            <td><a href="{{ route('admin.sources.edit', ['source'=>$source->id]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;<a href="" style="font-size: 16px; color:red;">уд.</a></td>
+                                        </tr>
                                     @empty
                                         <tr>
                                             <td colspan="5">Записей не найдено</td>
@@ -81,3 +79,4 @@
         <!-- /.content -->
     </div>
 @endsection
+
