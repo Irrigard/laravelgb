@@ -60,7 +60,10 @@
                                         <td>{{ $category->title }}</td>
                                         <td>{{ $category->description }}</td>
                                         <td>{{ $category->created_at }}</td>
-                                        <td><a href="{{ route('admin.categories.edit', ['category'=>$category->id]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;<a href="" style="font-size: 16px; color:red;">уд.</a></td>
+                                        <td>
+                                            <a href="{{ route('admin.categories.edit', ['category'=>$category->id]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;
+                                            <a href="javascript:;" rel="{{ $category->id }}" class="delete" style="font-size: 16px; color:red;">уд.</a>
+                                        </td>
                                     </tr>
                                     @empty
                                         <tr>
@@ -81,3 +84,24 @@
         <!-- /.content -->
     </div>
 @endsection
+@push('js')
+    <script>
+        $(function (){
+            $(".delete").on('click', function() {
+                if (confirm('Удалить запись?')){
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: "DELETE",
+                        url: "/admin/categories/" + $(this).attr('rel'),
+                        complete: function () {
+                            alert('Запись удалена');
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        });
+    </script>
+@endpush

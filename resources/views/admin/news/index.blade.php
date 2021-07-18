@@ -94,7 +94,7 @@
                         url: "/admin/news/" + $(this).attr('rel'),
                         complete: function () {
                             alert('Запись удалена');
-                            //location.reload();
+                            location.reload();
                         }
                     })
                 }

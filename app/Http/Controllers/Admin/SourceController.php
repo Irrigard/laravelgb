@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SourceStore;
+use App\Http\Requests\SourceUpdate;
 use Illuminate\Http\Request;
 use App\Models\Source;
 use \Illuminate\Http\RedirectResponse;
@@ -36,13 +38,13 @@ class SourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param SourceStore $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(SourceStore $request): RedirectResponse
     {
         $statusSource = Source::create(
-            $request->only(['title'])
+            $request->validated()
         );
 
         if ($statusSource) {
@@ -78,14 +80,14 @@ class SourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param SourceUpdate $request
      * @param Source $source
      * @return RedirectResponse
      */
-    public function update(Request $request, Source $source): RedirectResponse
+    public function update(SourceUpdate $request, Source $source): RedirectResponse
     {
         $statusSource = $source->fill(
-            $request->only(['title'])
+            $request->validated()
         )->save();
 
         if ($statusSource) {
@@ -97,11 +99,19 @@ class SourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param Source $source
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Source $source)
     {
-        //
+        if ($request->ajax())
+        {
+            try {
+                $source->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }

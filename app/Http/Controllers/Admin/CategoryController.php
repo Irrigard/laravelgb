@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryStore;
+use App\Http\Requests\CategoryUpdate;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -37,16 +39,13 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CategoryStore $request
+     * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CategoryStore $request): RedirectResponse
     {
-        /*$Data = file_get_contents('newCategories.txt');
-        $Data .= $request->input('title') . '; ' . $request->input('status') . '; ' . $request->input('description') . ';' . PHP_EOL;
-        file_put_contents('newCategories.txt', $Data);*/
         $statusCategory = Category::create(
-            $request->only(['title', 'description'])
+            $request->validated()
         );
 
         if ($statusCategory) {
@@ -82,14 +81,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param CategoryUpdate $request
      * @param Category $category
      * @return RedirectResponse
      */
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(CategoryUpdate $request, Category $category): RedirectResponse
     {
         $statusCategory = $category->fill(
-            $request->only(['title', 'description'])
+            $request->validated()
         )->save();
 
         if ($statusCategory) {
@@ -104,8 +103,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        if ($request->ajax())
+        {
+            try {
+                $category->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }
