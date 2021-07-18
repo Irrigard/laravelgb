@@ -24,7 +24,9 @@ class RelNewsCategorySeeder extends Seeder
         for ($i = 1; $i <= 10; $i++){
             $data[] = [
                 'news_id' => $i,
-                'category_id' => mt_rand(1, 6)
+                'category_id' => mt_rand(1, 5),
+                'created_at' => now(),
+                'updated_at' => now()
             ];
         }
 

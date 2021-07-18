@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Source;
 use App\Models\RelNewsCategory;
 use App\Models\RelNewsSource;
+use \Illuminate\Database\Eloquent\Relations\HasOne;
 
 class News extends Model
 {
@@ -20,6 +21,16 @@ class News extends Model
         'status',
         'updated_at'
     ];
+
+    public function relNewsCategory(): HasOne
+    {
+        return $this->hasOne(RelNewsCategory::class);
+    }
+
+    public function relNewsSource(): HasOne
+    {
+        return $this->hasOne(RelNewsSource::class);
+    }
 
     public function getNews()
     {

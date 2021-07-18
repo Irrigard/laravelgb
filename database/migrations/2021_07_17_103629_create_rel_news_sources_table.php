@@ -15,8 +15,8 @@ class CreateRelNewsSourcesTable extends Migration
     {
         Schema::create('rel_news_sources', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('news_id')->constrained();
-            $table->foreignId('source_id')->constrained();
+            $table->foreignId('news_id')->constrained()->onDelete('cascade');
+            $table->foreignId('source_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
