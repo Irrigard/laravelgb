@@ -15,6 +15,7 @@ class Category extends Model
     {
         return \DB::table($this->table)
             ->select(['id', 'title', 'description', 'created_at'])
+            ->orderBy('id')
             ->get();
     }
 

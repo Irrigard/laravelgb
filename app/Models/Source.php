@@ -14,6 +14,7 @@ class Source extends Model
     {
         return \DB::table($this->table)
             ->select(['id', 'title', 'created_at'])
+            ->orderBy('id')
             ->get();
     }
 

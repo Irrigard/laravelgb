@@ -19,12 +19,6 @@
 
         <!-- Main content -->
         <div style="margin-left: 11px">
-            @if ($errors->any())
-                @foreach($errors->all() as $error)
-                    <div class="alert alert-danger">{{ $error }}</div>
-                @endforeach
-            @endif
-
             <form method="post" action="{{ route('admin.news.update', ['news'=>$news->id]) }}" class="col-5">
                 @csrf
                 @method('put')
@@ -32,6 +26,13 @@
                     <label for="title">Заголовок</label>
                     <input type="text" class="form-control" id="title" name="title" value="{!! $news->title !!}">
                 </div>
+                @if($errors->has('title'))
+                    <div class="alert alert-danger">
+                        @foreach($errors->get('title') as $error)
+                            <p style="margin-bottom: 0;">{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
                 <div class="form-group">
                     <label for="status">Статус</label>
                     <select class="form-control" id="status" name="status">
@@ -40,6 +41,13 @@
                         <option @if($news->status === 'Blocked') selected @endif>Blocked</option>
                     </select>
                 </div>
+                @if($errors->has('status'))
+                    <div class="alert alert-danger">
+                        @foreach($errors->get('status') as $error)
+                            <p style="margin-bottom: 0;">{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
                 <div class="form-group">
                     <label for="image">Изображение</label>
                     <input type="file" class="form-control" id="image" name="image" value="{!! $news->image !!}">

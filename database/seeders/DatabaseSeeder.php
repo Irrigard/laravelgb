@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call([CategorySeeder::class, NewsSeeder::class, SourceSeeder::class, RelNewsCategorySeeder::class]);
-        $this->call([RelNewsCategorySeeder::class, RelNewsSourceSeeder::class]);
+        $this->call([CategorySeeder::class, NewsSeeder::class, SourceSeeder::class, RelNewsCategorySeeder::class, RelNewsSourceSeeder::class]);
+        //$this->call([RelNewsCategorySeeder::class, RelNewsSourceSeeder::class]);
         // \App\Models\User::factory(10)->create();
     }
 }

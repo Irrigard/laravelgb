@@ -24,7 +24,7 @@ class SourceSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++){
             $data[] = [
-                'title' => $faker->sentence(mt_rand(3, 7)),
+                'title' => $faker->sentence(mt_rand(2, 4)),
                 'created_at' => now(),
                 'updated_at' => now()
             ];

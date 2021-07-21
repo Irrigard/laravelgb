@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsStore;
+use App\Http\Requests\NewsUpdate;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
-use \Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\View;
 
 class NewsController extends Controller
 {
@@ -43,19 +45,12 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param NewsStore $request
      * @param News $news
      * @return RedirectResponse
      */
-    public function store(Request $request, News $news): RedirectResponse
+    public function store(NewsStore $request, News $news): RedirectResponse
     {
-        /*$Data = '';
-        if (file_exists('newNews.txt'))
-        {
-            $Data = file_get_contents('newNews.txt');
-        }
-        $Data .= $request->input('title') . '; ' . $request->input('status') . '; ' . $request->input('description') . ';' . PHP_EOL;
-        file_put_contents('newNews.txt', $Data);*/
         $statusNews = $news->createNews($request);
 
         if ($statusNews) {
@@ -94,11 +89,11 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param NewsUpdate $request
      * @param News $news
      * @return RedirectResponse
      */
-    public function update(Request $request, News $news): RedirectResponse
+    public function update(NewsUpdate $request, News $news): RedirectResponse
     {
         $statusNews = $news->updateNews($request, $news);
 
@@ -111,11 +106,19 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param News $news
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, News $news)
     {
-        //
+        if ($request->ajax())
+        {
+            try {
+                $news->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }

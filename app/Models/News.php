@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Source;
 use App\Models\RelNewsCategory;
 use App\Models\RelNewsSource;
+use \Illuminate\Database\Eloquent\Relations\HasOne;
 
 class News extends Model
 {
@@ -21,6 +22,16 @@ class News extends Model
         'updated_at'
     ];
 
+    public function relNewsCategory(): HasOne
+    {
+        return $this->hasOne(RelNewsCategory::class);
+    }
+
+    public function relNewsSource(): HasOne
+    {
+        return $this->hasOne(RelNewsSource::class);
+    }
+
     public function getNews()
     {
         /*return \DB::table($this->table)
@@ -28,13 +39,14 @@ class News extends Model
             ->get();*/
 
         return \DB::table($this->table)
-            ->join('rel_news_categories', 'news.id', '=', 'rel_news_categories.news_id')
-            ->join('categories', 'rel_news_categories.category_id', '=', 'categories.id')
-            ->join('rel_news_sources', 'news.id', '=', 'rel_news_sources.news_id')
-            ->join('sources', 'rel_news_sources.source_id', '=', 'sources.id')
+            ->leftjoin('rel_news_categories', 'news.id', '=', 'rel_news_categories.news_id')
+            ->leftjoin('categories', 'rel_news_categories.category_id', '=', 'categories.id')
+            ->leftjoin('rel_news_sources', 'news.id', '=', 'rel_news_sources.news_id')
+            ->leftjoin('sources', 'rel_news_sources.source_id', '=', 'sources.id')
             ->select(['news.id as id', 'news.title as title', 'slug', 'news.description as description',
                 'news.created_at as created_at', 'image', 'status',
                 'categories.title as categoryTitle', 'sources.title as sourceTitle'])
+            ->orderBy('id')
             ->get();
     }
 
@@ -44,10 +56,10 @@ class News extends Model
             ->find($id);*/
 
         return \DB::table($this->table)
-            ->join('rel_news_categories', 'news.id', '=', 'rel_news_categories.news_id')
-            ->join('categories', 'rel_news_categories.category_id', '=', 'categories.id')
-            ->join('rel_news_sources', 'news.id', '=', 'rel_news_sources.news_id')
-            ->join('sources', 'rel_news_sources.source_id', '=', 'sources.id')
+            ->leftjoin('rel_news_categories', 'news.id', '=', 'rel_news_categories.news_id')
+            ->leftjoin('categories', 'rel_news_categories.category_id', '=', 'categories.id')
+            ->leftjoin('rel_news_sources', 'news.id', '=', 'rel_news_sources.news_id')
+            ->leftjoin('sources', 'rel_news_sources.source_id', '=', 'sources.id')
             ->select(['news.id as id', 'news.title as title', 'slug', 'news.description as description',
                 'news.created_at as created_at', 'image', 'status',
                 'categories.title as categoryTitle', 'sources.title as sourceTitle'])
@@ -121,7 +133,14 @@ class News extends Model
             'description' => $request->input('description'),
             'updated_at' => now()
         ])->save();
-        if ($relNewsCategory->category_id !== $category->id){
+        if ($relNewsCategory === null){
+            $categoryStatus = \DB::table('rel_news_categories')->insert([
+                'news_id' => $news->id,
+                'category_id' => $category->id,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        } elseif($relNewsCategory->category_id !== $category->id) {
             $categoryStatus = $relNewsCategory->fill([
                 'category_id' => $category->id,
                 'updated_at' => now()
@@ -129,7 +148,14 @@ class News extends Model
         } else {
             $categoryStatus = true;
         }
-        if ($relNewsSource->source_id !== $source->id){
+        if ($relNewsSource === null){
+            $sourceStatus = \DB::table('rel_news_sources')->insert([
+                'news_id' => $news->id,
+                'source_id' => $source->id,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        } elseif($relNewsSource->source_id !== $source->id) {
             $sourceStatus = $relNewsSource->fill([
                 'source_id' => $source->id,
                 'updated_at' => now()
