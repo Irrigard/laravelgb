@@ -16,6 +16,9 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{ route('admin.sources.index') }}" class="nav-link">Источники</a>
         </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ route('admin.users.index') }}" class="nav-link">Пользователи</a>
+        </li>
     </ul>
 
     <!-- Right navbar links -->
