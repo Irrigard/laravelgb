@@ -21,6 +21,11 @@ class News extends Model
         'status',
         'updated_at'
     ];
+    private $parseCategories = [
+        'music' => 'Музыка',
+        'sport' => 'Спорт',
+        'computers' => 'Технологии'
+    ];
 
     public function relNewsCategory(): HasOne
     {
@@ -169,5 +174,57 @@ class News extends Model
         }
 
         return false;
+    }
+
+    public function saveParsedNews(array $data, string $category):bool
+    {
+        $category = Category::where([
+            ['title', '=', $this->parseCategories[$category]]
+        ])
+            ->select(['id'])
+            ->first();
+        $source = Source::where([
+            ['title', '=', 'Яндекс']
+        ])
+            ->select(['id'])
+            ->first();
+        foreach ($data['news'] as $news)
+        {
+            $newsDoubleCheck = News::where([
+                ['title', '=', $news['title']]
+            ])
+                ->select(['id'])
+                ->first();
+            if ($newsDoubleCheck === null)
+            {
+                $newsId = \DB::table($this->table)->insertGetId([
+                    'title' => $news['title'],
+                    'slug' => \Str::slug($news['title']),
+                    'description' => $news['description'],
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+
+                $categoryStatus = \DB::table('rel_news_categories')->insertOrIgnore([
+                    'news_id' => $newsId,
+                    'category_id' => $category->id,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                $sourceStatus = \DB::table('rel_news_sources')->insertOrIgnore([
+                    'news_id' => $newsId,
+                    'source_id' => $source->id,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                if (!is_numeric($newsId) || !$categoryStatus || !$sourceStatus){
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+
     }
 }
