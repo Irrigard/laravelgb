@@ -38,27 +38,27 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Dashboard
+                            Парсить
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
+                            <a href="{{ route('admin.parse', ['category' => 'music']) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
+                                <p>Музыку</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
+                            <a href="{{ route('admin.parse', ['category' => 'sport']) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v2</p>
+                                <p>Спорт</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index3.html" class="nav-link">
+                            <a href="{{ route('admin.parse', ['category' => 'computers']) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v3</p>
+                                <p>Технологии</p>
                             </a>
                         </li>
                     </ul>

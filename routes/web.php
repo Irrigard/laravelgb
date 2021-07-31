@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\SourceController as AdminSourceController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Account\IndexController as AccountController;
+use App\Http\Controllers\Admin\ParserController as Parser;
+use App\Http\Controllers\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +39,7 @@ Route::get('/category/{id}', [NewsController::class, 'categoryNews'])->name('cat
 Route::get('/news/{catId}/{id}', [NewsController::class, 'newsItem'])->name('news');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/account', AccountController::class);
+    Route::get('/account', AccountController::class)->name('account');;
     Route::get('/logout', function (){
         \Auth::logout();
         return redirect()->route('login');
@@ -50,7 +52,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('news', AdminNewsController::class);
         Route::resource('sources', AdminSourceController::class);
         Route::resource('users', AdminUserController::class);
+        Route::get('parse/{category?}', [Parser::class, 'parse'])->name('parse');
+       /* Route::group(['prefix'=>'parse', 'as'=>'parse.'], function () {
+            Route::get('music', [Parser::class, 'parseMusic']);
+        });*/
     });
+});
+
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/init/{driver?}', [SocialController::class, 'init'])
+        ->name('social.init');
+    Route::get('/callback/{driver?}', [SocialController::class, 'callback'])
+        ->name('social.callback');
 });
 
 Auth::routes();
