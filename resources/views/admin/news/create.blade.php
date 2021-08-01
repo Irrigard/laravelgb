@@ -80,4 +80,18 @@
         </div>
         <!-- /.content -->
     </div>
+    <script src="{{ asset('assets/js/ckeditor.js') }}"></script>
+
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#description' ), {
+                // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+            } )
+            .then( editor => {
+                window.editor = editor;
+            } )
+            .catch( err => {
+                console.error( err.stack );
+            } );
+    </script>
 @endsection

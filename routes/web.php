@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
         return redirect()->route('login');
     })->name('logout');
 
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
+
     //admin
     Route::group(['prefix'=>'admin', 'middleware'=>'admin', 'as'=>'admin.'], function () {
         Route::view('/', 'admin.index')->name('main');
@@ -65,6 +69,8 @@ Route::group(['middleware' => 'guest'], function() {
     Route::get('/callback/{driver?}', [SocialController::class, 'callback'])
         ->name('social.callback');
 });
+
+
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

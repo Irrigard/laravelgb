@@ -19,7 +19,7 @@
 
         <!-- Main content -->
         <div style="margin-left: 11px">
-            <form method="post" action="{{ route('admin.news.update', ['news'=>$news->id]) }}" class="col-5">
+            <form method="post" action="{{ route('admin.news.update', ['news'=>$news->id]) }}" class="col-5" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="form-group">
