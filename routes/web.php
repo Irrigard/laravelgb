@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
         return redirect()->route('login');
     })->name('logout');
 
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
+
     //admin
     Route::group(['prefix'=>'admin', 'middleware'=>'admin', 'as'=>'admin.'], function () {
         Route::view('/', 'admin.index')->name('main');
@@ -53,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('sources', AdminSourceController::class);
         Route::resource('users', AdminUserController::class);
         Route::get('parse/{category?}', [Parser::class, 'parse'])->name('parse');
+        Route::get('/parse_all', Parser::class)->name('parse_all');
        /* Route::group(['prefix'=>'parse', 'as'=>'parse.'], function () {
             Route::get('music', [Parser::class, 'parseMusic']);
         });*/
@@ -65,6 +70,8 @@ Route::group(['middleware' => 'guest'], function() {
     Route::get('/callback/{driver?}', [SocialController::class, 'callback'])
         ->name('social.callback');
 });
+
+
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -24,4 +24,12 @@ class Category extends Model
         return \DB::table($this->table)
             ->find($id);
     }
+
+    public function getCategoryByName(string $string)
+    {
+        return \DB::table($this->table)
+            ->select(['id'])
+            ->where('title', $string)
+            ->first();
+    }
 }

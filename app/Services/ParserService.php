@@ -5,6 +5,8 @@ namespace App\Services;
 
 
 use App\Contracts\Parser;
+use App\Models\Category;
+use App\Models\News;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 
 class ParserService implements Parser
@@ -30,5 +32,16 @@ class ParserService implements Parser
            ]
         ]);
         return $data;
+    }
+
+    public function saveNewsInDatabase(\stdClass $source)
+    {
+        $category = new Category();
+        $news = new News();
+        $parsedList = $this->getParsedList($source->url);
+        $explodedTitle = explode('-', $source->title);
+        $parsingCategory = end($explodedTitle);
+        $categoryId = $category->getCategoryByName($parsingCategory)->id;
+        $news->saveParsedNews($parsedList, $categoryId, $source->id);
     }
 }

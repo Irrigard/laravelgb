@@ -19,7 +19,7 @@
 
         <!-- Main content -->
         <div style="margin-left: 11px">
-            <form method="post" action="{{ route('admin.news.update', ['news'=>$news->id]) }}" class="col-5">
+            <form method="post" action="{{ route('admin.news.update', ['news'=>$news->id]) }}" class="col-5" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="form-group">
@@ -81,6 +81,19 @@
         </div>
         <!-- /.content -->
     </div>
+    @push('js')
+        <script>
+            var options = {
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token='+ "{{ csrf_token() }}",
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='+ "{{ csrf_token() }}",
+            };
+        </script>
+        <script>
+            CKEDITOR.replace('description', options);
+        </script>
+    @endpush
 @endsection
 
 

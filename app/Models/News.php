@@ -9,6 +9,7 @@ use App\Models\Source;
 use App\Models\RelNewsCategory;
 use App\Models\RelNewsSource;
 use \Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class News extends Model
 {
@@ -118,6 +119,15 @@ class News extends Model
     public function updateNews(Request $request, News $news):bool
     {
         $slug = \Str::slug($request->input('title'));
+        $newsImageLink = null;
+        if($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = md5($file->getClientOriginalName() . time());
+            $fileExt = $file->getClientOriginalExtension();
+            $newFileName = $fileName . '.' . $fileExt;
+            $newsImageLink = $file->storeAs('news', $newFileName, 'public');
+            //Storage::disk('public')->put("news", $file);
+        }
         $category = Category::where([
             ['title', '=', $request->input('category')]
         ])
@@ -133,7 +143,7 @@ class News extends Model
         $newsStatus = $news->fill([
             'title' => $request->input('title'),
             'slug' => $slug,
-            'image' => $request->input('image'),
+            'image' => $newsImageLink,
             'status' => $request->input('status'),
             'description' => $request->input('description'),
             'updated_at' => now()
@@ -176,18 +186,8 @@ class News extends Model
         return false;
     }
 
-    public function saveParsedNews(array $data, string $category):bool
+    public function saveParsedNews(array $data, int $category, int $source):bool
     {
-        $category = Category::where([
-            ['title', '=', $this->parseCategories[$category]]
-        ])
-            ->select(['id'])
-            ->first();
-        $source = Source::where([
-            ['title', '=', 'Яндекс']
-        ])
-            ->select(['id'])
-            ->first();
         foreach ($data['news'] as $news)
         {
             $newsDoubleCheck = News::where([
@@ -207,13 +207,13 @@ class News extends Model
 
                 $categoryStatus = \DB::table('rel_news_categories')->insertOrIgnore([
                     'news_id' => $newsId,
-                    'category_id' => $category->id,
+                    'category_id' => $category,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
                 $sourceStatus = \DB::table('rel_news_sources')->insertOrIgnore([
                     'news_id' => $newsId,
-                    'source_id' => $source->id,
+                    'source_id' => $source,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
