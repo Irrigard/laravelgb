@@ -25,6 +25,7 @@ class SourceStore extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'min:3', 'max:191'],
+            'url' => ['string', 'max:191', 'sometimes'],
         ];
     }
 }

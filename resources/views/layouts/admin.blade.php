@@ -43,6 +43,7 @@
 <script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/js/demo.js') }}"></script>
+<script src="{{ asset('assets/js/skeditor4.js') }}"></script>
 @stack('js')
 </body>
 </html>

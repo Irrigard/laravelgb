@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('sources', AdminSourceController::class);
         Route::resource('users', AdminUserController::class);
         Route::get('parse/{category?}', [Parser::class, 'parse'])->name('parse');
+        Route::get('/parse_all', Parser::class)->name('parse_all');
        /* Route::group(['prefix'=>'parse', 'as'=>'parse.'], function () {
             Route::get('music', [Parser::class, 'parseMusic']);
         });*/

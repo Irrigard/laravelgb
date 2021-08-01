@@ -44,21 +44,9 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.parse', ['category' => 'music']) }}" class="nav-link">
+                            <a href="{{ route('admin.parse_all') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Музыку</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.parse', ['category' => 'sport']) }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Спорт</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.parse', ['category' => 'computers']) }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Технологии</p>
+                                <p>Все категории</p>
                             </a>
                         </li>
                     </ul>

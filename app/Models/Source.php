@@ -7,13 +7,13 @@ class Source extends Model
 {
     protected $table = 'sources';
     protected $fillable = [
-        'title'
+        'title', 'url'
     ];
 
     public function getSources()
     {
         return \DB::table($this->table)
-            ->select(['id', 'title', 'created_at'])
+            ->select(['id', 'title', 'url', 'created_at'])
             ->orderBy('id')
             ->get();
     }

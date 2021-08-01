@@ -32,6 +32,17 @@
                         @endforeach
                     </div>
                 @endif
+                <div class="form-group">
+                    <label for="url">Ссылка</label>
+                    <input type="text" class="form-control" id="url" name="url" value="{!! old('url') !!}">
+                </div>
+                @if($errors->has('url'))
+                    <div class="alert alert-danger">
+                        @foreach($errors->get('url') as $error)
+                            <p style="margin-bottom: 0;">{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </form>
         </div>

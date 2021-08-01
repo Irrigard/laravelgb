@@ -186,18 +186,8 @@ class News extends Model
         return false;
     }
 
-    public function saveParsedNews(array $data, string $category):bool
+    public function saveParsedNews(array $data, int $category, int $source):bool
     {
-        $category = Category::where([
-            ['title', '=', $this->parseCategories[$category]]
-        ])
-            ->select(['id'])
-            ->first();
-        $source = Source::where([
-            ['title', '=', 'Яндекс']
-        ])
-            ->select(['id'])
-            ->first();
         foreach ($data['news'] as $news)
         {
             $newsDoubleCheck = News::where([
@@ -217,13 +207,13 @@ class News extends Model
 
                 $categoryStatus = \DB::table('rel_news_categories')->insertOrIgnore([
                     'news_id' => $newsId,
-                    'category_id' => $category->id,
+                    'category_id' => $category,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
                 $sourceStatus = \DB::table('rel_news_sources')->insertOrIgnore([
                     'news_id' => $newsId,
-                    'source_id' => $source->id,
+                    'source_id' => $source,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);

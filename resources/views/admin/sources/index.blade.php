@@ -48,6 +48,7 @@
                                     <tr>
                                         <th>#ID</th>
                                         <th>Название</th>
+                                        <th>Ссылка</th>
                                         <th>Дата добавления</th>
                                         <th>Управление</th>
                                     </tr>
@@ -57,6 +58,7 @@
                                         <tr>
                                             <td>{{ $source->id }}</td>
                                             <td>{{ $source->title }}</td>
+                                            <td>{{ $source->url }}</td>
                                             <td>{{ $source->created_at }}</td>
                                             <td>
                                                 <a href="{{ route('admin.sources.edit', ['source'=>$source->id]) }}" style="font-size: 16px;">ред.</a>&nbsp; | &nbsp;
